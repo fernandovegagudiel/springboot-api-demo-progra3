@@ -30,14 +30,7 @@ public class SaludoController {
         ));
     }
 
-    //===========================================
-    // PASO 2: DESCOMENTA este bloque y prueba GET
-    //===========================================
-
-    // 1) Descomenta imports:
-    // (ya descomentados arriba)
-
-    // 2) Descomenta el campo y constructor:
+   
 
     private final SaludoService saludoService;
 
