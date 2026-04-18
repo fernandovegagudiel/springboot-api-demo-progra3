@@ -6,6 +6,7 @@ import com.ejemplo.demo.domain.service.PrestamoService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import com.ejemplo.demo.domain.model.Prestamo;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
