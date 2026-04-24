@@ -3,18 +3,14 @@ package com.ejemplo.demo.api.controller;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
-// PASO 2: imports descomentados
 import com.ejemplo.demo.api.dto.SaludoResponse;
 import com.ejemplo.demo.domain.service.SaludoService;
-//PAso 3:import 
+import org.springframework.web.bind.annotation.RequestParam;
 import com.ejemplo.demo.api.dto.SaludoRequest;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-
 
 import java.util.Map;
 
@@ -30,15 +26,15 @@ public class SaludoController {
         ));
     }
 
-   
-
+  
+  
     private final SaludoService saludoService;
 
     public SaludoController(SaludoService saludoService) {
         this.saludoService = saludoService;
     }
 
-    // 3) Descomenta este endpoint:
+
 
     @GetMapping("/saludos")
     public ResponseEntity<SaludoResponse> saludar(
@@ -46,15 +42,10 @@ public class SaludoController {
     ) {
         return ResponseEntity.ok(saludoService.crearSaludo(nombre));
     }
-
     
-   // ============================================
-   // PASO 3: DESCOMENTA este bloque y prueba POST
-    //============================================
 
     
 
-   // 2) Descomenta este endpoint:
 
     @PostMapping("/saludos")
     public ResponseEntity<SaludoResponse> saludarPost(@Valid @RequestBody SaludoRequest request) {

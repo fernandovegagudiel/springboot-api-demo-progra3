@@ -5,6 +5,7 @@ import lombok.Data;
 import java.util.List;
 
 @Entity
+
 public class Cliente {
     public Long getId() {
 		return id;

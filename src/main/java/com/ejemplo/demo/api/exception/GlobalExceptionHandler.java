@@ -44,8 +44,6 @@ public class GlobalExceptionHandler {
     }
 
     
-//    Descomenta y adapta este manejador cuando agregues validaciones propias
-//    en el servicio, por ejemplo IllegalArgumentException.
 
     @ExceptionHandler(IllegalArgumentException.class)
     public ResponseEntity<ErrorResponse> manejarReglaDeNegocio(IllegalArgumentException ex) {
