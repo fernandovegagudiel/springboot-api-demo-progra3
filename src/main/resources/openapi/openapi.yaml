@@ -2,6 +2,8 @@ openapi: 3.0.3
 info:
   title: Spring Boot API Demo - Contract First
   version: 0.0.1-SNAPSHOT
+  description: API demo con saludos, simulador de préstamo, estado singleton/manual y CRUD JPA.
+
 paths:
   /api/v1:
     get:
@@ -15,7 +17,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
+                $ref: '#/components/schemas/WorkshopHealthResponse'
 
   /api/v1/saludos:
     get:
@@ -37,6 +39,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/SaludoResponse'
+
     post:
       tags:
         - workshop
@@ -60,7 +63,7 @@ paths:
     post:
       tags:
         - simulaciones
-      summary: Simular prestamo
+      summary: Simular préstamo
       operationId: simularPrestamo
       requestBody:
         required: true
@@ -75,6 +78,39 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/PrestamoResponse'
+
+  /api/v1/simulaciones:
+    get:
+      tags:
+        - simulaciones
+      summary: Obtiene la lista de todos los préstamos guardados
+      operationId: listarTodos
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+
+  /api/v1/simulaciones/{id}:
+    delete:
+      tags:
+        - simulaciones
+      summary: Elimina un préstamo por su ID
+      operationId: eliminar
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '204':
+          description: No Content
 
   /api/v1/demo/estado/singleton/{valor}:
     post:
@@ -94,7 +130,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
+                $ref: '#/components/schemas/EstadoResponse'
 
   /api/v1/demo/estado/singleton:
     get:
@@ -108,7 +144,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
+                $ref: '#/components/schemas/EstadoResponse'
 
   /api/v1/demo/estado/singleton/reset:
     post:
@@ -122,7 +158,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
+                $ref: '#/components/schemas/EstadoResponse'
 
   /api/v1/demo/estado/manual/{valor}:
     post:
@@ -142,7 +178,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
+                $ref: '#/components/schemas/EstadoResponse'
 
   /api/v1/demo/estado/manual:
     get:
@@ -156,33 +192,316 @@ paths:
           content:
             application/json:
               schema:
-                type: object
+                $ref: '#/components/schemas/EstadoResponse'
+
+  /api/v1/productos:
+    get:
+      tags:
+        - productos
+      summary: Listar todos los productos
+      operationId: listarProductos
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ProductoResponse'
+
+    post:
+      tags:
+        - productos
+      summary: Crear un producto asociado a una categoría
+      operationId: crearProducto
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProductoRequest'
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductoResponse'
+
+  /api/v1/productos/{id}:
+    get:
+      tags:
+        - productos
+      summary: Obtener un producto por ID
+      operationId: obtenerProductoPorId
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductoResponse'
+
+    put:
+      tags:
+        - productos
+      summary: Actualizar un producto existente
+      operationId: actualizarProducto
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProductoRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductoResponse'
+
+    delete:
+      tags:
+        - productos
+      summary: Eliminar un producto
+      operationId: eliminarProducto
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '204':
+          description: No Content
+
+  /api/v1/categorias:
+    get:
+      tags:
+        - categorias
+      summary: Listar todas las categorías
+      operationId: listarCategorias
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CategoriaResponse'
+
+    post:
+      tags:
+        - categorias
+      summary: Crear una nueva categoría
+      operationId: crearCategoria
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CategoriaRequest'
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CategoriaResponse'
+
+  /api/v1/categorias/{id}:
+    get:
+      tags:
+        - categorias
+      summary: Obtener una categoría por ID
+      operationId: obtenerCategoriaPorId
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CategoriaResponse'
+
+    put:
+      tags:
+        - categorias
+      summary: Actualizar una categoría existente
+      operationId: actualizarCategoria
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CategoriaRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CategoriaResponse'
+
+    delete:
+      tags:
+        - categorias
+      summary: Eliminar una categoría
+      operationId: eliminarCategoria
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '204':
+          description: No Content
 
 components:
   schemas:
+    WorkshopHealthResponse:
+      type: object
+      properties:
+        estado:
+          type: string
+        mensaje:
+          type: string
+
     SaludoRequest:
       type: object
+      required:
+        - nombre
       properties:
         nombre:
           type: string
+
     SaludoResponse:
       type: object
       properties:
         mensaje:
           type: string
+        timestamp:
+          type: string
+          format: date-time
+
     PrestamoRequest:
       type: object
+      required:
+        - monto
+        - tasaAnual
+        - meses
       properties:
         monto:
           type: number
-        tasa:
+          format: double
+        tasaAnual:
           type: number
-        plazos:
+          format: double
+        meses:
           type: integer
+          format: int32
+
     PrestamoResponse:
       type: object
       properties:
         cuotaMensual:
           type: number
-        totalIntereses:
+          format: double
+        interesTotal:
           type: number
+          format: double
+        totalPagar:
+          type: number
+          format: double
+
+    EstadoResponse:
+      type: object
+      properties:
+        tipo:
+          type: string
+        valorActual:
+          type: integer
+
+    ProductoRequest:
+      type: object
+      required:
+        - nombre
+        - precio
+        - categoriaId
+      properties:
+        nombre:
+          type: string
+        precio:
+          type: number
+          format: double
+        categoriaId:
+          type: integer
+          format: int64
+
+    ProductoResponse:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        nombre:
+          type: string
+        precio:
+          type: number
+          format: double
+        categoriaNombre:
+          type: string
+
+    CategoriaRequest:
+      type: object
+      required:
+        - nombre
+      properties:
+        nombre:
+          type: string
+        descripcion:
+          type: string
+
+    CategoriaResponse:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        nombre:
+          type: string
+        descripcion:
+          type: string

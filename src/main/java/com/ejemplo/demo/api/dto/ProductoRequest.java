@@ -1,10 +1,10 @@
 package com.ejemplo.demo.api.dto;
 
-import jakarta.validation.constraints.*;
-import lombok.Data;
+import jakarta.validation.constraints.DecimalMin;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import java.math.BigDecimal;
 
-@Data
 public class ProductoRequest {
     @NotBlank(message = "El nombre es obligatorio")
     private String nombre;
@@ -15,13 +15,28 @@ public class ProductoRequest {
 
     @NotNull(message = "La categoría es obligatoria")
     private Long categoriaId;
-    
-    public String getNombre() { return nombre; }
-    public void setNombre(String nombre) { this.nombre = nombre; }
 
-    public java.math.BigDecimal getPrecio() { return precio; }
-    public void setPrecio(java.math.BigDecimal precio) { this.precio = precio; }
+    public String getNombre() {
+        return nombre;
+    }
 
-    public Long getCategoriaId() { return categoriaId; }
-    public void setCategoriaId(Long categoriaId) { this.categoriaId = categoriaId; }
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public BigDecimal getPrecio() {
+        return precio;
+    }
+
+    public void setPrecio(BigDecimal precio) {
+        this.precio = precio;
+    }
+
+    public Long getCategoriaId() {
+        return categoriaId;
+    }
+
+    public void setCategoriaId(Long categoriaId) {
+        this.categoriaId = categoriaId;
+    }
 }
